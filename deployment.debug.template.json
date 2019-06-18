@@ -60,29 +60,6 @@
               "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0",
               "createOptions": {}
             }
-          },
-          "NodeModule": {
-            "version": "1.0",
-            "type": "docker",
-            "status": "running",
-            "restartPolicy": "always",
-            "settings": {
-              "image": "${MODULES.NodeModule.debug}",
-              "createOptions": {
-                "ExposedPorts": {
-                  "9229/tcp": {}
-                },
-                "HostConfig": {
-                  "PortBindings": {
-                    "9229/tcp": [
-                      {
-                        "HostPort": "9229"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -90,10 +67,7 @@
     "$edgeHub": {
       "properties.desired": {
         "schemaVersion": "1.0",
-        "routes": {
-          "NodeModuleToIoTHub": "FROM /messages/modules/NodeModule/outputs/* INTO $upstream",
-          "sensorToNodeModule": "FROM /messages/modules/tempSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/NodeModule/inputs/input1\")"
-        },
+        "routes": {},
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
         }
