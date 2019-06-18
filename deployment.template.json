@@ -70,6 +70,16 @@
               "image": "${MODULES.NodeModule}",
               "createOptions": {}
             }
+          },
+          "SampleModuleFunction": {
+            "version": "1.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "${MODULES.SampleModuleFunction}",
+              "createOptions": {}
+            }
           }
         }
       }
@@ -79,7 +89,9 @@
         "schemaVersion": "1.0",
         "routes": {
           "NodeModuleToIoTHub": "FROM /messages/modules/NodeModule/outputs/* INTO $upstream",
-          "sensorToNodeModule": "FROM /messages/modules/tempSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/NodeModule/inputs/input1\")"
+          "sensorToNodeModule": "FROM /messages/modules/tempSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/NodeModule/inputs/input1\")",
+          "SampleModuleFunctionToIoTHub": "FROM /messages/modules/SampleModuleFunction/outputs/* INTO $upstream",
+          "sensorToSampleModuleFunction": "FROM /messages/modules/tempSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/SampleModuleFunction/inputs/input1\")"
         },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
