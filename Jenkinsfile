@@ -1,13 +1,13 @@
 node {
    stage('Preparation') {
       // Get some code from a GitHub repository
-      git 'https://github.com/formulahendry/EdgeSolutionJenkinsTest'
+      git 'https://github.com/czgtest/EdgeSolutionJenkinsTest'
    }
    stage('Build') {
-      azureIoTEdgeBuild defaultPlatform: 'amd64', deploymentManifestFilePath: 'deployment.template.json'
+      azureIoTEdgeBuild defaultPlatform: 'amd64', deploymentManifestFilePath: 'EdgeSolutionJenkinsTest/deployment.template.json'
    }
    stage('Push') {
-      azureIoTEdgePush acrName: 'aziotedgedevclitest', azureCredentialsId: 'JunServicePrincipal', defaultPlatform: 'amd64', deploymentManifestFilePath: 'deployment.template.json', resourceGroup: 'azure-iot-edge'
+      azureIoTEdgePush acrName: 'aziotedgedevclitest', azureCredentialsId: 'JunServicePrincipal', defaultPlatform: 'amd64', deploymentManifestFilePath: 'EdgeSolutionJenkinsTest/deployment.template.json', resourceGroup: 'azure-iot-edge'
    }
    stage('Generate Deployment Manifest') {
       azureIoTEdgeGenConfig defaultPlatform: 'amd64', deploymentFilePath: 'config/deployment.json', deploymentManifestFilePath: 'deployment.template.json'

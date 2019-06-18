@@ -1,5 +1,5 @@
 {
-  "$schema-template": "1.0.0",
+  "$schema-template": "1.0.1",
   "modulesContent": {
     "$edgeAgent": {
       "properties.desired": {
@@ -61,13 +61,13 @@
               "createOptions": {}
             }
           },
-          "NodeModule": {
-            "version": "1.0",
+          "IotEdgeModuleCsharp": {
+            "version": "1.0.0",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "${MODULES.NodeModule}",
+              "image": "${MODULEDIR<../IotEdgeModuleCsharp>.debug}",
               "createOptions": {}
             }
           }
@@ -78,8 +78,8 @@
       "properties.desired": {
         "schemaVersion": "1.0",
         "routes": {
-          "NodeModuleToIoTHub": "FROM /messages/modules/NodeModule/outputs/* INTO $upstream",
-          "sensorToNodeModule": "FROM /messages/modules/tempSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/NodeModule/inputs/input1\")"
+          "IotEdgeModuleCsharpToIoTHub": "FROM /messages/modules/IotEdgeModuleCsharp/outputs/* INTO $upstream",
+          "sensorToIotEdgeModuleCsharp": "FROM /messages/modules/tempSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/IotEdgeModuleCsharp/inputs/input1\")"
         },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
