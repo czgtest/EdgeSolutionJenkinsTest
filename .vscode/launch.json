@@ -1,22 +1,39 @@
 {
   "version": "0.2.0",
-  "configurations": [
+  "configurations": [    
     {
-      "name": "NodeModule Remote Debug (Node.js)",
-      "type": "node",
+      "name": "SampleModuleCsharp Remote Debug (.NET Core)",
+      "type": "coreclr",
       "request": "attach",
-      "port": 9229,
-      "address": "localhost",
-      "localRoot": "${workspaceRoot}/modules/NodeModule",
-      "remoteRoot": "/app",
-      "protocol": "inspector"
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": [
+          "exec",
+          "-i",
+          "SampleModuleCsharp",
+          "sh",
+          "-c"
+        ],
+        "debuggerPath": "~/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}",
+        "quoteArgs": true
+      },
+      "sourceFileMap": {
+        "/app": "${workspaceFolder}/modules/SampleModuleCsharp"
+      },
+      "justMyCode": true
     },
     {
-      "name": "NodeModule Local Debug (Node.js)",
-      "type": "node",
+      "name": "SampleModuleCsharp Local Debug (.NET Core)",
+      "type": "coreclr",
       "request": "launch",
-      "program": "${workspaceRoot}/modules/NodeModule/app.js",
-      "console": "integratedTerminal",
+      "program": "${workspaceRoot}/modules/SampleModuleCsharp/bin/Debug/netcoreapp2.1/SampleModuleCsharp.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/modules/SampleModuleCsharp",
+      "internalConsoleOptions": "openOnSessionStart",
+      "stopAtEntry": false,
+      "console": "internalConsole",
       "env": {
         "EdgeHubConnectionString": "${config:azure-iot-edge.EdgeHubConnectionString}",
         "EdgeModuleCACertificateFile": "${config:azure-iot-edge.EdgeModuleCACertificateFile}"
